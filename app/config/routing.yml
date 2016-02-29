@@ -1,0 +1,25 @@
+workshop_workshop:
+    resource: "@WorkshopBundle/Controller/WorkshopController.php"
+    type:     annotation
+
+api_login_check:
+    path: /api/login_check
+
+comment:
+    resource: "@CommentBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+workshop:
+    resource: "@WorkshopBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

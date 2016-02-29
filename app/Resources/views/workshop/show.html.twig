@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Workshop</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ workshop.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ workshop.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ workshop.description }}</td>
+            </tr>
+            <tr>
+                <th>Instructor</th>
+                <td>{{ workshop.instructor }}</td>
+            </tr>
+            <tr>
+                <th>Excerpt</th>
+                <td>{{ workshop.excerpt }}</td>
+            </tr>
+            <tr>
+                <th>Resources</th>
+                <td>{% if workshop.resources %}{{ workshop.resources|join(', ') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Comments</th>
+                <td>{% if workshop.comments %}{{ workshop.comments|join(', ') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if workshop.createdAt %}{{ workshop.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if workshop.updatedAt %}{{ workshop.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('api_workshop_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('api_workshop_edit', { 'id': workshop.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
