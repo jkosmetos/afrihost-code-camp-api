@@ -3,6 +3,10 @@
 namespace CommentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+use UserBundle\Entity\User;
+use WorkshopBundle\Entity\Workshop;
 
 /**
  * Comment
@@ -24,27 +28,39 @@ class Comment
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=125)
-     */
-    private $title;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="body", type="text")
      */
     private $body;
 
     /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="comments")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     */
+    private $author;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="WorkshopBundle\Entity\Workshop", inversedBy="comments")
+     * @ORM\JoinColumn(name="workshop_id", referencedColumnName="id")
+     */
+    private $workshop;
+
+    /**
      * @var int
      *
-     * @ORM\Column(name="parent", type="integer")
+     * @ORM\Column(name="parent_id", type="integer", nullable=true)
+     */
+    private $parentId;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Comment")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     private $parent;
 
     /**
      * @var \DateTime
      *
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
      */
     private $createdAt;
@@ -52,6 +68,7 @@ class Comment
     /**
      * @var \DateTime
      *
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
@@ -65,30 +82,6 @@ class Comment
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Comment
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**
@@ -116,6 +109,22 @@ class Comment
     }
 
     /**
+     * @return mixed
+     */
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
+
+    /**
+     * @param mixed $parentId
+     */
+    public function setParentId($parentId)
+    {
+        $this->parentId = $parentId;
+    }
+
+    /**
      * Set parent
      *
      * @param integer $parent
@@ -137,6 +146,38 @@ class Comment
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWorkshop()
+    {
+        return $this->workshop;
+    }
+
+    /**
+     * @param mixed $workshop
+     */
+    public function setWorkshop($workshop)
+    {
+        $this->workshop = $workshop;
     }
 
     /**

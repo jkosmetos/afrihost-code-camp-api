@@ -1,3 +1,6 @@
+# .idea folder
+.idea/*
+
 # Cache and logs (Symfony2)
 /app/cache/*
 /app/logs/*
@@ -5,8 +8,10 @@
 !app/logs/.gitkeep
 
 # Cache and logs (Symfony3)
+/var/sessions/*
 /var/cache/*
 /var/logs/*
+!var/sessions/.gitkeep
 !var/cache/.gitkeep
 !var/logs/.gitkeep
 

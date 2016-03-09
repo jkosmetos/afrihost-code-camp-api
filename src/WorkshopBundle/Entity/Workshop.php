@@ -3,6 +3,8 @@
 namespace WorkshopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
+use CommentBundle\Entity\Comment;
 
 /**
  * Workshop
@@ -31,14 +33,20 @@ class Workshop
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="icon_class", type="string", length=125)
+     */
+    private $iconClass;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
      */
     private $description;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="instructor", type="integer")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="workshops")
+     * @ORM\JoinColumn(name="instructor_id", referencedColumnName="id")
      */
     private $instructor;
 
@@ -50,18 +58,16 @@ class Workshop
     private $excerpt;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="resources", type="array")
-     */
-    private $resources;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="comments", type="array")
+     * @ORM\OneToMany(targetEntity="CommentBundle\Entity\Comment", mappedBy="workshop", cascade={"persist"})
      */
     private $comments;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="starts_at", type="datetime")
+     */
+    private $startsAt;
 
     /**
      * @var \DateTime
@@ -86,6 +92,22 @@ class Workshop
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIconClass()
+    {
+        return $this->iconClass;
+    }
+
+    /**
+     * @param string $iconClass
+     */
+    public function setIconClass($iconClass)
+    {
+        $this->iconClass = $iconClass;
     }
 
     /**
@@ -185,51 +207,43 @@ class Workshop
     }
 
     /**
-     * Set resources
+     * Set comments
      *
-     * @param array $resources
+     * @param array $comments
      *
      * @return Workshop
      */
-    public function setResources($resources)
+    public function setComments($comments)
     {
-        $this->resources = $resources;
+        $this->comments = $comments;
 
         return $this;
     }
 
     /**
-     * Get resources
-     *
-     * @return array
-     */
-    public function getResources()
-    {
-        return $this->resources;
-    }
-
-    /**
-     * Set posts
-     *
-     * @param array $posts
-     *
-     * @return Workshop
-     */
-    public function setComments($posts)
-    {
-        $this->posts = $posts;
-
-        return $this;
-    }
-
-    /**
-     * Get posts
+     * Get comments
      *
      * @return array
      */
     public function getComments()
     {
-        return $this->posts;
+        return $this->comments;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStartsAt()
+    {
+        return $this->startsAt;
+    }
+
+    /**
+     * @param \DateTime $startsAt
+     */
+    public function setStartsAt($startsAt)
+    {
+        $this->startsAt = $startsAt;
     }
 
     /**

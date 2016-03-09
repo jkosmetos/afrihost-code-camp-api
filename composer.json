@@ -30,11 +30,13 @@
         "nelmio/cors-bundle": "^1.4",
         "jms/serializer": "^1.1",
         "lexik/jwt-authentication-bundle": "^1.4",
-        "sacheen/rest-hook-bundle": "dev-master"
+        "sacheen/rest-hook-bundle": "dev-master",
+        "gedmo/doctrine-extensions": "^2.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^3.0",
+        "doctrine/doctrine-fixtures-bundle": "^2.3"
     },
     "scripts": {
         "post-install-cmd": [

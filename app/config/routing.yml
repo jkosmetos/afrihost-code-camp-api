@@ -1,9 +1,7 @@
-workshop_workshop:
-    resource: "@WorkshopBundle/Controller/WorkshopController.php"
+news_feed:
+    resource: "@NewsFeedBundle/Controller/"
     type:     annotation
-
-api_login_check:
-    path: /api/login_check
+    prefix:   /
 
 comment:
     resource: "@CommentBundle/Controller/"
@@ -20,6 +18,6 @@ user:
     type:     annotation
     prefix:   /
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+api_login_check:
+    path: /api/login_check
+

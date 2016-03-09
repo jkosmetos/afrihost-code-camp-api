@@ -2,8 +2,11 @@
 
 namespace UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use CommentBundle\Entity\Comment;
+use WorkshopBundle\Entity\Workshop;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use Serializable;
@@ -17,6 +20,7 @@ use Serializable;
  */
 class User implements AdvancedUserInterface, Serializable
 {
+
     /**
      * @var integer
      *
@@ -35,7 +39,6 @@ class User implements AdvancedUserInterface, Serializable
      */
     private $email;
 
-
     /**
      * @var string
      *
@@ -43,6 +46,22 @@ class User implements AdvancedUserInterface, Serializable
      * @Expose
      */
     private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="first_name", type="string", length=255)
+     * @Expose
+     */
+    private $firstName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="last_name", type="string", length=255)
+     * @Expose
+     */
+    private $lastName;
 
     /**
      * @var string
@@ -59,6 +78,13 @@ class User implements AdvancedUserInterface, Serializable
     private $salt;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive = true;
+
+    /**
      * @var array
      *
      * @ORM\Column(name="roles", type="array")
@@ -67,15 +93,52 @@ class User implements AdvancedUserInterface, Serializable
     private $roles = array();
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\OneToMany(targetEntity="CommentBundle\Entity\Comment", mappedBy="user")
      */
-    private $isActive = true;
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity="WorkshopBundle\Entity\Workshop", mappedBy="user")
+     */
+    private $workshops;
 
     public function __construct()
     {
-        $this->salt = NULL;
+        $this->salt = '';
+        $this->comments = new ArrayCollection();
+        $this->workshops = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
     }
 
     /**
@@ -111,6 +174,22 @@ class User implements AdvancedUserInterface, Serializable
     }
 
     /**
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param boolean $isActive
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+    }
+
+    /**
      * @return string
      */
     public function getUsername()
@@ -127,9 +206,7 @@ class User implements AdvancedUserInterface, Serializable
     }
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -153,21 +230,40 @@ class User implements AdvancedUserInterface, Serializable
     }
 
     /**
-     * @return boolean
+     * @return mixed
      */
-    public function getIsActive()
+    public function getComments()
     {
-        return $this->isActive;
+        return $this->comments;
     }
 
     /**
-     * @param boolean $isActive
+     * @param mixed $comments
      */
-    public function setIsActive($isActive)
+    public function setComments($comments)
     {
-        $this->isActive = $isActive;
+        $this->comments = $comments;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getWorkshops()
+    {
+        return $this->workshops;
+    }
+
+    /**
+     * @param mixed $workshops
+     */
+    public function setWorkshops($workshops)
+    {
+        $this->workshops = $workshops;
+    }
+
+    /**
+     * @return array
+     */
     public function getRoles()
     {
         $roles =  $this->roles;
@@ -176,6 +272,9 @@ class User implements AdvancedUserInterface, Serializable
         return $roles;
     }
 
+    /**
+     * @param array $roles
+     */
     public function setRoles(array $roles)
     {
         $this->roles = $roles;

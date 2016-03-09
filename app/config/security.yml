@@ -4,6 +4,7 @@ security:
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
+        ROLE_LECTURER:    [ROLE_USER, ROLE_ADMIN]
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
@@ -31,6 +32,9 @@ security:
             lexik_jwt: ~
 
     access_control:
-      - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-      - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/api/user/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/api/user/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/api/user/lecturers, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/api/workshops, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/api/news, roles: IS_AUTHENTICATED_ANONYMOUSLY }
       - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
