@@ -71,6 +71,14 @@ class UserBulkPasswordMailerCommand extends ContainerAwareCommand
         try {
 
             $csvUsers = [
+                [ "first_name" => "Sarel", "last_name" => "Van Der Walt","email_address" => "sarel@afrihost.com"],
+                [ "first_name" => "Sacheen", "last_name" => "Dhanjie","email_address" => "sacheend@afrihost.com"],
+                [ "first_name" => "Gavin", "last_name" => "McLeland","email_address" => "gavinm@afrihost.com"],
+                [ "first_name" => "Lee", "last_name" => "Pelser","email_address" => "lee@afrihost.com"],
+                [ "first_name" => "John", "last_name" => "Kosmetos","email_address" => "johnk@afrihost.com"],
+                [ "first_name" => "Johnathan", "last_name" => "Dell","email_address" => "johnathandell@afrihost.com"],
+                [ "first_name" => "Dale", "last_name" => "Attree","email_address" => "dalea@afrihost.com"],
+                [ "first_name" => "Brad", "last_name" => "Mostert","email_address" => "bradm@afrihost.com"],
                 [ "first_name" => "Michael","last_name" => "Magumise","email_address" => "kmagumise@hotmail.com"],
                 [ "first_name" => "Lear","last_name" => "Pather","email_address" => "lear.p@afrihost.com"],
                 [ "first_name" => "Walter","last_name" => "Da Silva","email_address" => "walter@afrihost.com"],
@@ -121,6 +129,8 @@ class UserBulkPasswordMailerCommand extends ContainerAwareCommand
                 $message = \Swift_Message::newInstance()
                     ->setSubject('Afrihost Code Camp :: Password Reminder')
                     ->setFrom('noreply@afrihostcodecamp.com')
+                    ->setReplyTo('noreply@afrihostcodecamp.com')
+                    ->setSender('noreply@afrihostcodecamp.com')
                     ->setTo($csvUser['email_address'])
                     ->setBody(
                         $this->templating->render(
@@ -131,7 +141,7 @@ class UserBulkPasswordMailerCommand extends ContainerAwareCommand
                                 'password' => $newPassword
                             ]
                         ), 'text/html' );
-
+                
                 $this->em->persist($user);
                 $this->mailer->send($message);
 
