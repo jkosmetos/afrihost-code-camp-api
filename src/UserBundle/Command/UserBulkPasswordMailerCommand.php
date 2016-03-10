@@ -121,7 +121,7 @@ class UserBulkPasswordMailerCommand extends ContainerAwareCommand
                 $message = \Swift_Message::newInstance()
                     ->setSubject('Afrihost Code Camp :: Password Reminder')
                     ->setFrom('noreply@afrihostcodecamp.com')
-                    ->setTo('johnk@afrihost.com')
+                    ->setTo($csvUser['email_address'])
                     ->setBody(
                         $this->templating->render(
                             'UserBundle:mails:forgot_password.html.twig',
