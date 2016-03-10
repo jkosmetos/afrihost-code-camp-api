@@ -2,6 +2,7 @@
 
 namespace CommentBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -45,17 +46,15 @@ class Comment
     private $workshop;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="parent_id", type="integer", nullable=true)
-     */
-    private $parentId;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Comment")
+     * @ORM\ManyToOne(targetEntity="CommentBundle\Entity\Comment", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
     private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CommentBundle\Entity\Comment", mappedBy="parent")
+     */
+    private $replies;
 
     /**
      * @var \DateTime
@@ -73,11 +72,14 @@ class Comment
      */
     private $updatedAt;
 
+    public function __construct() {
+        $this->replies = new ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -106,78 +108,6 @@ class Comment
     public function getBody()
     {
         return $this->body;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getParentId()
-    {
-        return $this->parentId;
-    }
-
-    /**
-     * @param mixed $parentId
-     */
-    public function setParentId($parentId)
-    {
-        $this->parentId = $parentId;
-    }
-
-    /**
-     * Set parent
-     *
-     * @param integer $parent
-     *
-     * @return Comment
-     */
-    public function setParent($parent)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return int
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param mixed $author
-     */
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getWorkshop()
-    {
-        return $this->workshop;
-    }
-
-    /**
-     * @param mixed $workshop
-     */
-    public function setWorkshop($workshop)
-    {
-        $this->workshop = $workshop;
     }
 
     /**
@@ -227,5 +157,110 @@ class Comment
     {
         return $this->updatedAt;
     }
-}
 
+    /**
+     * Set author
+     *
+     * @param \UserBundle\Entity\User $author
+     *
+     * @return Comment
+     */
+    public function setAuthor(\UserBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set workshop
+     *
+     * @param \WorkshopBundle\Entity\Workshop $workshop
+     *
+     * @return Comment
+     */
+    public function setWorkshop(\WorkshopBundle\Entity\Workshop $workshop = null)
+    {
+        $this->workshop = $workshop;
+
+        return $this;
+    }
+
+    /**
+     * Get workshop
+     *
+     * @return \WorkshopBundle\Entity\Workshop
+     */
+    public function getWorkshop()
+    {
+        return $this->workshop;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \CommentBundle\Entity\Comment $parent
+     *
+     * @return Comment
+     */
+    public function setParent(\CommentBundle\Entity\Comment $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \CommentBundle\Entity\Comment
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Add reply
+     *
+     * @param \CommentBundle\Entity\Comment $reply
+     *
+     * @return Comment
+     */
+    public function addReply(\CommentBundle\Entity\Comment $reply)
+    {
+        $this->replies[] = $reply;
+
+        return $this;
+    }
+
+    /**
+     * Remove reply
+     *
+     * @param \CommentBundle\Entity\Comment $reply
+     */
+    public function removeReply(\CommentBundle\Entity\Comment $reply)
+    {
+        $this->replies->removeElement($reply);
+    }
+
+    /**
+     * Get replies
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReplies()
+    {
+        return $this->replies;
+    }
+}

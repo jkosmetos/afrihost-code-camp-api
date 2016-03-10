@@ -29,17 +29,15 @@ class CommentController extends Controller
 
         try {
 
-            /* @var $em EntityManager */
-            /* @var $workshopRepo WorkshopRepository */
-            $em = $this->getDoctrine()->getManager();
-            $workshopRepo = $em->getRepository('WorkshopBundle:Workshop');
-
             $workshopiId = $request->get('workshop_id', null);
             $parentId = $request->get('parent_id', null);
             $body = $request->get('comment', null);
 
+            /* @var $em EntityManager */
             /* @var $workshop Workshop */
-            $workshop = $workshopRepo->findOneBy(array('id' => $workshopiId));
+            /* @var $parent Comment */
+            $em = $this->getDoctrine()->getManager();
+            $workshop = $em->getReference('WorkshopBundle:Workshop', $workshopiId);
 
             if(!$workshop instanceof Workshop) {
                 throw new \Exception('Please provide a valid Workshop ID');
@@ -52,8 +50,14 @@ class CommentController extends Controller
             $comment = new Comment();
             $comment->setBody($body);
             $comment->setWorkshop($workshop);
-            $comment->setParentId($parentId);
             $comment->setAuthor($this->getUser());
+
+            if($parentId) {
+
+                $parent = $em->getReference('CommentBundle:Comment', $parentId);
+                $comment->setParent($parent);
+
+            }
 
             // TODO this needs to be removed, Gedmo/Timestampable isnt fucking working
             $comment->setCreatedAt(new \DateTime());
@@ -62,11 +66,11 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush($comment);
 
-            return $comment;
+            return ['code' => 1, 'comment' => $comment];
 
         } catch (\Exception $e) {
 
-            return array('code' => 0, 'message' => $e->getMessage());
+            return ['code' => 0, 'message' => $e->getMessage()];
 
         }
 

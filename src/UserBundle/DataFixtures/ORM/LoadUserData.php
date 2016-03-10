@@ -44,6 +44,66 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
 
         $manager->persist($user);
 
+        $user = new User();
+        $user->setFirstName('Johnathan');
+        $user->setLastName('Dell');
+        $user->setEmail('johnathandell@afrihost.com');
+        $user->setUsername('johnathandell');
+        $user->setRoles(array('ROLE_LECTURER'));
+        $user->setPassword($encoder->encodePassword($user, 'johnathandell1234'));
+
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setFirstName('Sarel');
+        $user->setLastName('Van Der Walt');
+        $user->setEmail('sarel@afrihost.com');
+        $user->setUsername('sarel');
+        $user->setRoles(array('ROLE_LECTURER'));
+        $user->setPassword($encoder->encodePassword($user, 'sarel1234'));
+
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setFirstName('Lee');
+        $user->setLastName('Pelser');
+        $user->setEmail('lee@afrihost.com');
+        $user->setUsername('lee');
+        $user->setRoles(array('ROLE_LECTURER'));
+        $user->setPassword($encoder->encodePassword($user, 'lee1234'));
+
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setFirstName('Brad');
+        $user->setLastName('Mostert');
+        $user->setEmail('bradm@afrihost.com');
+        $user->setUsername('bradm');
+        $user->setRoles(array('ROLE_LECTURER'));
+        $user->setPassword($encoder->encodePassword($user, 'bradm1234'));
+
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setFirstName('Dale');
+        $user->setLastName('Attree');
+        $user->setEmail('dalea@afrihost.com');
+        $user->setUsername('dalea');
+        $user->setRoles(array('ROLE_LECTURER'));
+        $user->setPassword($encoder->encodePassword($user, 'dalea1234'));
+
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setFirstName('Gavin');
+        $user->setLastName('McLeland');
+        $user->setEmail('gavin@afrihost.com');
+        $user->setUsername('gavin');
+        $user->setRoles(array('ROLE_LECTURER'));
+        $user->setPassword($encoder->encodePassword($user, 'gavin1234'));
+
+        $manager->persist($user);
+
 
         $manager->flush();
 

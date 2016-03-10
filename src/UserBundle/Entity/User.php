@@ -82,7 +82,7 @@ class User implements AdvancedUserInterface, Serializable
      *
      * @ORM\Column(name="is_active", type="boolean")
      */
-    private $isActive = true;
+    private $isActive;
 
     /**
      * @var array
@@ -100,112 +100,26 @@ class User implements AdvancedUserInterface, Serializable
     /**
      * @ORM\OneToMany(targetEntity="WorkshopBundle\Entity\Workshop", mappedBy="user")
      */
+    private $lectures;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="WorkshopBundle\Entity\Workshop", inversedBy="students")
+     * @ORM\JoinTable(name="users_workshops")
+     */
     private $workshops;
 
     public function __construct()
     {
         $this->salt = '';
         $this->comments = new ArrayCollection();
+        $this->lectures = new ArrayCollection();
         $this->workshops = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
 
     /**
-     * @param string $firstName
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * @param string $lastName
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-
-    /**
-     * @param string $salt
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
-    }
-
-    /**
-     * @param boolean $isActive
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param string $username
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
-
-    /**
+     * Get id
+     *
      * @return integer
      */
     public function getId()
@@ -214,6 +128,22 @@ class User implements AdvancedUserInterface, Serializable
     }
 
     /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
      * @return string
      */
     public function getEmail()
@@ -222,46 +152,166 @@ class User implements AdvancedUserInterface, Serializable
     }
 
     /**
-     * @param string $email
+     * Set username
+     *
+     * @param string $username
+     *
+     * @return User
      */
-    public function setEmail($email)
+    public function setUsername($username)
     {
-        $this->email = $email;
+        $this->username = $username;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * Get username
+     *
+     * @return string
      */
-    public function getComments()
+    public function getUsername()
     {
-        return $this->comments;
+        return $this->username;
     }
 
     /**
-     * @param mixed $comments
+     * Set firstName
+     *
+     * @param string $firstName
+     *
+     * @return User
      */
-    public function setComments($comments)
+    public function setFirstName($firstName)
     {
-        $this->comments = $comments;
+        $this->firstName = $firstName;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * Get firstName
+     *
+     * @return string
      */
-    public function getWorkshops()
+    public function getFirstName()
     {
-        return $this->workshops;
+        return $this->firstName;
     }
 
     /**
-     * @param mixed $workshops
+     * Set lastName
+     *
+     * @param string $lastName
+     *
+     * @return User
      */
-    public function setWorkshops($workshops)
+    public function setLastName($lastName)
     {
-        $this->workshops = $workshops;
+        $this->lastName = $lastName;
+
+        return $this;
     }
 
     /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     *
+     * @return User
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return User
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     *
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
      * @return array
      */
     public function getRoles()
@@ -273,11 +323,120 @@ class User implements AdvancedUserInterface, Serializable
     }
 
     /**
-     * @param array $roles
+     * Add comment
+     *
+     * @param \CommentBundle\Entity\Comment $comment
+     *
+     * @return User
      */
-    public function setRoles(array $roles)
+    public function addComment(\CommentBundle\Entity\Comment $comment)
     {
-        $this->roles = $roles;
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \CommentBundle\Entity\Comment $comment
+     */
+    public function removeComment(\CommentBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * Add lecture
+     *
+     * @param \WorkshopBundle\Entity\Workshop $lecture
+     *
+     * @return User
+     */
+    public function addLecture(\WorkshopBundle\Entity\Workshop $lecture)
+    {
+        $this->lectures[] = $lecture;
+
+        return $this;
+    }
+
+    /**
+     * Remove lecture
+     *
+     * @param \WorkshopBundle\Entity\Workshop $lecture
+     */
+    public function removeLecture(\WorkshopBundle\Entity\Workshop $lecture)
+    {
+        $this->lectures->removeElement($lecture);
+    }
+
+    /**
+     * Get lectures
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLectures()
+    {
+        return $this->lectures;
+    }
+
+    /**
+     * Add workshop
+     *
+     * @param \WorkshopBundle\Entity\Workshop $workshop
+     *
+     * @return User
+     */
+    public function addWorkshop(\WorkshopBundle\Entity\Workshop $workshop)
+    {
+        $this->workshops[] = $workshop;
+
+        return $this;
+    }
+
+    /**
+     * Remove workshop
+     *
+     * @param \WorkshopBundle\Entity\Workshop $workshop
+     */
+    public function removeWorkshop(\WorkshopBundle\Entity\Workshop $workshop)
+    {
+        $this->workshops->removeElement($workshop);
+    }
+
+    /**
+     * Get workshops
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWorkshops()
+    {
+        return $this->workshops;
+    }
+
+    /**
+     * Get workshop
+     *
+     * @param \WorkshopBundle\Entity\Workshop $workshop
+     *
+     * @return \WorkshopBundle\Entity\Workshop
+     */
+    public function getWorkshop(\WorkshopBundle\Entity\Workshop $workshop)
+    {
+        return $this->workshops->filter(function ($item) use ($workshop) {
+                return $item->getId() == $workshop->getId();
+        })->first();
+
     }
 
     public function eraseCredentials()
@@ -376,4 +535,5 @@ class User implements AdvancedUserInterface, Serializable
         $this->username = $data['username'];
         $this->password = $data['password'];
     }
+
 }

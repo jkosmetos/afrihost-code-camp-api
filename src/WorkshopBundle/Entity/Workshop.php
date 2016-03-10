@@ -2,6 +2,7 @@
 
 namespace WorkshopBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use UserBundle\Entity\User;
 use CommentBundle\Entity\Comment;
@@ -45,10 +46,15 @@ class Workshop
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="workshops")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", inversedBy="lectures")
      * @ORM\JoinColumn(name="instructor_id", referencedColumnName="id")
      */
     private $instructor;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User", mappedBy="workshops")
+     */
+    private $students;
 
     /**
      * @var string
@@ -83,55 +89,20 @@ class Workshop
      */
     private $updatedAt;
 
+    public function __construct() {
+        $this->students = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
+
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIconClass()
-    {
-        return $this->iconClass;
-    }
-
-    /**
-     * @param string $iconClass
-     */
-    public function setIconClass($iconClass)
-    {
-        $this->iconClass = $iconClass;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Workshop
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**
@@ -159,27 +130,51 @@ class Workshop
     }
 
     /**
-     * Set instructor
+     * Set iconClass
      *
-     * @param integer $instructor
+     * @param string $iconClass
      *
      * @return Workshop
      */
-    public function setInstructor($instructor)
+    public function setIconClass($iconClass)
     {
-        $this->instructor = $instructor;
+        $this->iconClass = $iconClass;
 
         return $this;
     }
 
     /**
-     * Get instructor
+     * Get iconClass
      *
-     * @return int
+     * @return string
      */
-    public function getInstructor()
+    public function getIconClass()
     {
-        return $this->instructor;
+        return $this->iconClass;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Workshop
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -207,43 +202,27 @@ class Workshop
     }
 
     /**
-     * Set comments
+     * Set startsAt
      *
-     * @param array $comments
+     * @param \DateTime $startsAt
      *
      * @return Workshop
      */
-    public function setComments($comments)
+    public function setStartsAt($startsAt)
     {
-        $this->comments = $comments;
+        $this->startsAt = $startsAt;
 
         return $this;
     }
 
     /**
-     * Get comments
+     * Get startsAt
      *
-     * @return array
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getStartsAt()
     {
         return $this->startsAt;
-    }
-
-    /**
-     * @param \DateTime $startsAt
-     */
-    public function setStartsAt($startsAt)
-    {
-        $this->startsAt = $startsAt;
     }
 
     /**
@@ -293,5 +272,96 @@ class Workshop
     {
         return $this->updatedAt;
     }
-}
 
+    /**
+     * Set instructor
+     *
+     * @param \UserBundle\Entity\User $instructor
+     *
+     * @return Workshop
+     */
+    public function setInstructor(\UserBundle\Entity\User $instructor = null)
+    {
+        $this->instructor = $instructor;
+
+        return $this;
+    }
+
+    /**
+     * Get instructor
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getInstructor()
+    {
+        return $this->instructor;
+    }
+
+    /**
+     * Add student
+     *
+     * @param \UserBundle\Entity\User $student
+     *
+     * @return Workshop
+     */
+    public function addStudent(\UserBundle\Entity\User $student)
+    {
+        $this->students[] = $student;
+
+        return $this;
+    }
+
+    /**
+     * Remove student
+     *
+     * @param \UserBundle\Entity\User $student
+     */
+    public function removeStudent(\UserBundle\Entity\User $student)
+    {
+        $this->students->removeElement($student);
+    }
+
+    /**
+     * Get students
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStudents()
+    {
+        return $this->students;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \CommentBundle\Entity\Comment $comment
+     *
+     * @return Workshop
+     */
+    public function addComment(\CommentBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \CommentBundle\Entity\Comment $comment
+     */
+    public function removeComment(\CommentBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+}
