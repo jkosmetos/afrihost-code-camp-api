@@ -82,7 +82,7 @@ class User implements AdvancedUserInterface, Serializable
      *
      * @ORM\Column(name="is_active", type="boolean")
      */
-    private $isActive;
+    private $isActive = true;
 
     /**
      * @var array
