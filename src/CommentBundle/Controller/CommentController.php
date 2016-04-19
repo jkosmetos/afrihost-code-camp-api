@@ -59,7 +59,7 @@ class CommentController extends Controller
 
             }
 
-            // TODO this needs to be removed, Gedmo/Timestampable isnt fucking working
+            // TODO this should be updated to use Gedmo/Timestampable
             $comment->setCreatedAt(new \DateTime());
             $comment->setUpdatedAt(new \DateTime());
 
