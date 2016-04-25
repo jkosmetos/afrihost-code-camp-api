@@ -71,38 +71,7 @@ class UserBulkPasswordMailerCommand extends ContainerAwareCommand
         try {
 
             $csvUsers = [
-                [ "first_name" => "Sarel", "last_name" => "Van Der Walt","email_address" => "sarel@afrihost.com"],
-                [ "first_name" => "Sacheen", "last_name" => "Dhanjie","email_address" => "sacheend@afrihost.com"],
-                [ "first_name" => "Gavin", "last_name" => "McLeland","email_address" => "gavinm@afrihost.com"],
-                [ "first_name" => "Lee", "last_name" => "Pelser","email_address" => "lee@afrihost.com"],
-                [ "first_name" => "John", "last_name" => "Kosmetos","email_address" => "johnk@afrihost.com"],
-                [ "first_name" => "Johnathan", "last_name" => "Dell","email_address" => "johnathandell@afrihost.com"],
-                [ "first_name" => "Dale", "last_name" => "Attree","email_address" => "dalea@afrihost.com"],
-                [ "first_name" => "Brad", "last_name" => "Mostert","email_address" => "bradm@afrihost.com"],
-                [ "first_name" => "Michael","last_name" => "Magumise","email_address" => "kmagumise@hotmail.com"],
-                [ "first_name" => "Lear","last_name" => "Pather","email_address" => "lear.p@afrihost.com"],
-                [ "first_name" => "Walter","last_name" => "Da Silva","email_address" => "walter@afrihost.com"],
-                [ "first_name" => "Ryan","last_name" => "Lumsden","email_address" => "ryan@afrihost.com"],
-                [ "first_name" => "Jonathan","last_name" => "Potgieter","email_address" => "jonnypotgieter@gmail.com"],
-                [ "first_name" => "Jailosi","last_name" => "Phiri","email_address" => "jailosi.p@afrihost.com"],
-                [ "first_name" => "James","last_name" => "Mohono","email_address" => "james.mohono@afrihost.com"],
-                [ "first_name" => "Fortune","last_name" => "Maseko","email_address" => "fortune.m@afrihost.com"],
-                [ "first_name" => "Mawande","last_name" => "Nxumalo","email_address" => "mawande.n@afrihost.com"],
-                [ "first_name" => "Nkululeko","last_name" => "Dube","email_address" => "mrpeaced@gmail.com"],
-                [ "first_name" => "Kendall","last_name" => "Jordaan","email_address" => "kjordaan405@gmail.com"],
-                [ "first_name" => "Sanushen","last_name" => "Govender","email_address" => "sanushen.g@afrihost.com"],
-                [ "first_name" => "Dowayne","last_name" => "Breedt","email_address" => "dowayne.b@afrihost.com"],
-                [ "first_name" => "Kudzaishe","last_name" => "Chitonga","email_address" => "kudzaishec@afrihost.com"],
-                [ "first_name" => "Thabo","last_name" => "Nkgweng","email_address" => "thabo.n@afrihost.com"],
-                [ "first_name" => "Thandaninkosi","last_name" => "Moyo","email_address" => "thandaninkosi.m@afrihost.com"],
-                [ "first_name" => "Sizwe","last_name" => "Mkhonto","email_address" => "sizwe.m@afrihost.com"],
-                [ "first_name" => "Matthew","last_name" => "Ketley","email_address" => "matthew.k@afrihost.com"],
-                [ "first_name" => "Sabelo","last_name" => "Mbokazi","email_address" => "sabelom@afrihost.com"],
-                [ "first_name" => "Koketso","last_name" => "Polorie","email_address" => "kndpolorie@gmail.com"],
-                [ "first_name" => "Larry","last_name" => "Nxumalo","email_address" => "tlnxumalo@gmail.com"],
-                [ "first_name" => "Asaph","last_name" => "Mulaisi","email_address" => "asaph.m@afrihost.com"],
-                [ "first_name" => "Edward","last_name" => "Stroebel","email_address" => "edwards@afrihost.com"],
-                [ "first_name" => "Ruan","last_name" => "Prinsloo","email_address" => "ruan.prinsloo@afrihost.com"]
+                [ "first_name" => "John","last_name" => "Smith", "email_address" => "jsmith@email.com"]
             ];
 
             foreach($csvUsers as $csvUser) {
