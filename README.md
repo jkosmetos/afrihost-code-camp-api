@@ -1,4 +1,4 @@
-Afrihost
+# Afrihost Code Camp API
 
 afrihost-code-camp-api
 ======================
