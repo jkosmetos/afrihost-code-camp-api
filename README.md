@@ -3,6 +3,6 @@
 afrihost-code-camp-api
 ======================
 
-###NOTE: This project is actively being developed, and will be undergoing a plethora of changes and refinements. 
+###NOTE: This project is actively being developed, and will be undergoing a plethora of changes and refinements.
 
 A Symfony Project created on February 29, 2016, 8:27 pm.
